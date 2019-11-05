@@ -7,6 +7,7 @@ int main(int argc, char const *argv[])
 
     while(1)
 	{
+	    //	most of the menu options dont work
 		printf("MAIN MENU");
 		printf("\n1. Create list");
         printf("\n2. Display ");
