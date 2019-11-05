@@ -57,5 +57,5 @@ int main(int argc, char const *argv[])
     }
 
     return 0;
-    //  end of main
+    //  end of main = end of program
 }
