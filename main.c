@@ -33,6 +33,8 @@ int main(int argc, char const *argv[])
         {
             case 0: exit(0);    break;
 
+            case 1: d = create_DLL(d);  break;
+
             case 2: print_list(d);   break;
 
             case 3:	

@@ -220,3 +220,40 @@ struct DLL insert_node_sorted(struct DLL d, int data){
     }
     return d;
 }
+
+struct DLL create_DLL(struct DLL d)
+{
+	int num;
+	printf("Enter -1 to end. \n");
+	printf("Enter data : ");
+	scanf("%d",&num);
+	while(num != -1)
+	{
+        struct node* newNode = (struct node *) malloc(sizeof(struct node)), *ptr;
+        if (newNode == NULL) { //  if newNode couldnt be allocated: insufficient memory :(
+            printf("<Memory Overflow> Insufficient Memory, Insertion Failed!\n");
+            return d;
+        }
+		// newNode->data=num;
+		if(d.head == NULL && d.tail == NULL)
+		{
+			newNode->data = num;
+            newNode->prev = newNode->next = NULL;
+            d.head = newNode;
+            d.tail = newNode;
+		}
+		else
+		{
+			newNode->data = num;
+            newNode->prev = d.tail;
+            d.tail->next = newNode;
+            d.tail = newNode;
+            d.tail->next = NULL;
+		}
+
+		printf("Enter data : ");
+		scanf("%d",&num);		
+	}
+	return d;	
+}
+
