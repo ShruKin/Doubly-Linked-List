@@ -14,6 +14,9 @@ void print_list(struct DLL d);
 struct DLL insert_node_end(struct DLL d, int data);
 struct DLL insert_node_begin(struct DLL d, int data);
 struct DLL insert_node(struct DLL d, int data, int idx);
+struct DLL insert_node_sorted(struct DLL d, int data);
+struct DLL create_DLL(struct DLL d);
+struct DLL create_sorted_DLL(struct DLL d);
 
 void print_list(struct DLL d)
 {
@@ -306,4 +309,70 @@ struct DLL create_sorted_DLL(struct DLL d)
 		scanf("%d",&num);		
 	}
 	return d;	
+}
+
+struct DLL move_node(struct DLL d, int movefrom_idx, int moveto_idx)    //  pass index (0, 1, 2, ... )
+{
+    if(d.head == NULL && d.tail == NULL)
+        return d;
+
+    if(movefrom_idx < 0 || moveto_idx < 0){
+        printf("<Index Overflow> Index cannot be negative, Movement Failed\n");
+        return d;
+    }
+
+    if(movefrom_idx == moveto_idx)  //  no movement needed
+        return d;
+
+    if(movefrom_idx <= moveto_idx){ //  move to right
+        int move = moveto_idx - movefrom_idx;
+
+        struct node *ptr = d.head;
+        for(int i = 0; i < movefrom_idx; i++)
+        {   
+            ptr = ptr->next;
+            if(ptr == NULL){    //  if end of the list is already reached
+                printf("<Index Overflow> Index beyond range, Insertion Failed!\n");
+                return d;
+            }
+        }
+
+        int temp = ptr->data;
+        for(int i=0; i<move; i++){
+            ptr->data = ptr->next->data;
+            ptr = ptr->next;
+            if(ptr == NULL){    //  if end of the list is already reached
+                printf("<Index Overflow> Index beyond range, Insertion Failed!\n");
+                return d;
+            }
+        }
+        ptr->data = temp;
+    }
+
+    else{   //  move to left
+        int move = movefrom_idx - moveto_idx;
+
+        struct node *ptr = d.head;
+        for(int i = 0; i < movefrom_idx; i++)
+        {   
+            ptr = ptr->next;
+            if(ptr == NULL){    //  if end of the list is already reached
+                printf("<Index Overflow> Index beyond range, Insertion Failed!\n");
+                return d;
+            }
+        }
+
+        int temp = ptr->data;
+        for(int i=0; i<move; i++){
+            ptr->data = ptr->prev->data;
+            ptr = ptr->prev;
+            if(ptr == NULL){    //  if end of the list is already reached
+                printf("<Index Overflow> Index beyond range, Insertion Failed!\n");
+                return d;
+            }
+        }
+        ptr->data = temp;
+    }
+
+    return d;
 }

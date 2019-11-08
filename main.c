@@ -24,6 +24,7 @@ int main(int argc, char const *argv[])
         printf("\n13. Reverse list ");
         printf("\n14. Delete duplicate elements from list ");
         printf("\n15. Insert in a sorted list");
+        printf("\n16. Move a node");
         printf("\n0. EXIT\n");
 
         printf("Enter your choice : ");
@@ -62,6 +63,14 @@ int main(int argc, char const *argv[])
                 printf("Enter data: ");
                 scanf("%d", &data);
                 d = insert_node_sorted(d, data);		break;
+
+            case 16:
+                int movefrom, moveto;
+                printf("Enter index to move from: ");
+                scanf("%d", &movefrom);
+                printf("Enter index to move to: ");
+                scanf("%d", &moveto);
+                d = move_node(d, movefrom, moveto);
         }
 
         printf("\n\n");
