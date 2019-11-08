@@ -188,7 +188,7 @@ struct DLL insert_node_sorted(struct DLL d, int data){
         return d;
     }
 
-    if(data < d.head->data){
+    if(data <= d.head->data){
         newNode->data = data;
         newNode->next = d.head;
         d.head->prev = newNode;
@@ -199,14 +199,9 @@ struct DLL insert_node_sorted(struct DLL d, int data){
 
     else {
         struct node *ptr = d.head;
-        while(data <= ptr->data)
-        {   //  interating till the required position to insert
+        while(ptr->next != NULL && data >= ptr->next->data)
             ptr = ptr->next;
-            if(ptr == NULL){    //  if end of the list is already reached
-                printf("<Index Overflow> Index beyond range, Insertion Failed!\n");
-                return d;
-            }
-        }
+        
         newNode->data = data;
 
         /*  inserting the node in between the current temporary node and the next one   */
@@ -218,6 +213,7 @@ struct DLL insert_node_sorted(struct DLL d, int data){
             d.tail = newNode;
         ptr->next = newNode;
     }
+    print_list(d);
     return d;
 }
 
@@ -257,3 +253,57 @@ struct DLL create_DLL(struct DLL d)
 	return d;	
 }
 
+struct DLL create_sorted_DLL(struct DLL d)
+{
+	int num;
+	printf("Enter -1 to end. \n");
+	printf("Enter data : ");
+	scanf("%d",&num);
+	while(num != -1)
+	{
+        struct node* newNode = (struct node *) malloc(sizeof(struct node)), *ptr;
+        if (newNode == NULL) { //  if newNode couldnt be allocated: insufficient memory :(
+            printf("<Memory Overflow> Insufficient Memory, Insertion Failed!\n");
+            return d;
+        }
+		// newNode->data=num;
+		if(d.head == NULL && d.tail == NULL)
+		{
+			newNode->data = num;
+            newNode->prev = newNode->next = NULL;
+            d.head = newNode;
+            d.tail = newNode;
+		}
+		else
+		{
+			if(num <= d.head->data){
+                newNode->data = num;
+                newNode->next = d.head;
+                d.head->prev = newNode;
+                d.head = newNode;
+                d.head->prev = NULL;
+            }
+
+            else {
+                struct node *ptr = d.head;
+                while(ptr->next != NULL && num >= ptr->next->data)
+                    ptr = ptr->next;
+                
+                newNode->data = num;
+
+                /*  inserting the node in between the current temporary node and the next one   */
+                newNode->next = ptr->next; // Connect new node with n+1th node
+                newNode->prev = ptr;
+                if (newNode->next != NULL) 
+                    newNode->next->prev = newNode; 
+                else if(newNode->next == NULL)
+                    d.tail = newNode;
+                ptr->next = newNode;
+            }
+		}
+
+		printf("Enter data : ");
+		scanf("%d",&num);		
+	}
+	return d;	
+}
