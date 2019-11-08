@@ -10,6 +10,11 @@ struct DLL{
     struct node *head, *tail;
 };
 
+void print_list(struct DLL d);
+struct DLL insert_node_end(struct DLL d, int data);
+struct DLL insert_node_begin(struct DLL d, int data);
+struct DLL insert_node(struct DLL d, int data, int idx);
+
 void print_list(struct DLL d)
 {
     struct node *first = d.head, *last = d.tail;
@@ -119,13 +124,17 @@ struct DLL insert_node(struct DLL d, int data, int idx){     //  idx is index of
 
     struct node *newNode = (struct node *)malloc(sizeof(struct node));
     // struct node *ptr = head;
+    if (newNode == NULL) {
+        printf("<Memory Overflow> Insufficient Memory, Insertion Failed!\n");
+        return d;
+    }
 
     if(idx < 0){
         printf("<Index Overflow> Index cannot be negative, Insertion Failed\n");
         return d;
     }
 
-    if(idx == 0){    //  if idx is zero, insert at the beginning
+    else if(idx == 0){    //  if idx is zero, insert at the beginning
         newNode->data = data;
         newNode->next = d.head;
         d.head->prev = newNode;
@@ -134,13 +143,63 @@ struct DLL insert_node(struct DLL d, int data, int idx){     //  idx is index of
         return d;
     }
     
+    else {
+        struct node *ptr = d.head;
+        for(int i = 0; i < idx-1; i++)
+        {   //  interating till the required position to insert
+            ptr = ptr->next;
+            if(ptr == NULL){    //  if end of the list is already reached
+                printf("<Index Overflow> Index beyond range, Insertion Failed!\n");
+                return d;
+            }
+        }
+        newNode->data = data;
+
+        /*  inserting the node in between the current temporary node and the next one   */
+        newNode->next = ptr->next; // Connect new node with n+1th node
+        newNode->prev = ptr;
+        if (newNode->next != NULL) 
+            newNode->next->prev = newNode; 
+        else if(newNode->next == NULL)
+            d.tail = newNode;
+        ptr->next = newNode;
+    }
+    return d;
+}
+
+struct DLL insert_node_sorted(struct DLL d, int data){
+    if(d.head == NULL && d.tail == NULL){ //  if list is initially empty
+        struct node* newNode = (struct node *) malloc(sizeof(struct node));
+        if (newNode == NULL) { //  if newNode couldnt be allocated: insufficient memory :(
+            printf("<Memory Overflow> Insufficient Memory, Insertion Failed!\n");
+            return d;
+        }
+        newNode->data = data;
+        newNode->prev = newNode->next = NULL;
+        d.head = newNode;
+        d.tail = newNode;
+        return d;
+    }
+
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));
+    // struct node *ptr = head;
     if (newNode == NULL) {
         printf("<Memory Overflow> Insufficient Memory, Insertion Failed!\n");
         return d;
     }
+
+    if(data < d.head->data){
+        newNode->data = data;
+        newNode->next = d.head;
+        d.head->prev = newNode;
+        d.head = newNode;
+        d.head->prev = NULL;
+        return d;
+    }
+
     else {
         struct node *ptr = d.head;
-        for(int i = 0; i < idx-1; i++)
+        while(data <= ptr->data)
         {   //  interating till the required position to insert
             ptr = ptr->next;
             if(ptr == NULL){    //  if end of the list is already reached

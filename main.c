@@ -14,14 +14,15 @@ int main(int argc, char const *argv[])
         printf("\n3. Insert at beginning ");
         printf("\n4. Insert at end ");
         printf("\n5. Insert at position ");
-        printf("\n6. Delete at beginning ");
-        printf("\n7. Delete at end ");
-        printf("\n8. Delete at pos ");
-        printf("\n9. Sort list ");
-        printf("\n10. Search element ");
-        printf("\n11. Reverse list ");
-        printf("\n12. Delete duplicate elements from list ");
-        printf("\n13. Insert in a sorted list");
+        printf("\n6. Insert sorted ");
+        printf("\n7. Delete at beginning ");
+        printf("\n8. Delete at end ");
+        printf("\n9. Delete at pos ");
+        printf("\n10. Sort list ");
+        printf("\n11. Search element ");
+        printf("\n12. Reverse list ");
+        printf("\n13. Delete duplicate elements from list ");
+        printf("\n14. Insert in a sorted list");
         printf("\n0. EXIT\n");
 
         printf("Enter your choice : ");
@@ -51,6 +52,11 @@ int main(int argc, char const *argv[])
                 scanf("%d", &pos);
                 //  using pos-1 as index should be passed in the function
                 d = insert_node(d, data, pos-1);  	break;
+
+            case 6:
+                printf("Enter data: ");
+                scanf("%d", &data);
+                d = insert_node_sorted(d, data);		break;
         }
 
         printf("\n\n");
@@ -58,4 +64,4 @@ int main(int argc, char const *argv[])
 
     return 0;
     //  end of main = end of program
-}
+ }
