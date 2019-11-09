@@ -71,7 +71,7 @@ int main(int argc, char const *argv[])
 
             case 13: d = merge_sort(d);    break;
 
-            case 16:
+            case 17:
                 int movefrom, moveto;
                 printf("Enter index to move from: ");
                 scanf("%d", &movefrom);
