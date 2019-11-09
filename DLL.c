@@ -217,7 +217,7 @@ struct DLL insert_node_sorted(struct DLL d, int data){
             d.tail = newNode;
         ptr->next = newNode;
     }
-    print_list(d);
+    
     return d;
 }
 
@@ -413,3 +413,18 @@ struct DLL bubbleSort(struct DLL d)
 
     return d;
 } 
+
+struct DLL insertionSort(struct DLL d)
+{
+    if (d.head == NULL && d.tail == NULL) 
+        return d; 
+
+    struct DLL sorted = {NULL, NULL};
+
+    struct node *ptr = d.head;
+    while (ptr != NULL){
+        sorted = insert_node_sorted(sorted, ptr->data);  //  yes! this sorted insert is seperately required for insertion sort
+        ptr = ptr->next;
+    }
+    return sorted;
+}
