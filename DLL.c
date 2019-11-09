@@ -18,6 +18,11 @@ struct DLL insert_node_sorted(struct DLL d, int data);
 struct DLL create_DLL(struct DLL d);
 struct DLL create_sorted_DLL(struct DLL d);
 struct DLL move_node(struct DLL d, int movefrom_idx, int moveto_idx);
+void swap(int *a, int *b);
+struct DLL bubbleSort(struct DLL d);
+struct DLL insertionSort(struct DLL d);
+struct DLL merge(struct DLL left, struct DLL right);
+struct DLL merge_sort(struct DLL d);
 
 void print_list(struct DLL d)
 {

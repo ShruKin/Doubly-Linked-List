@@ -69,7 +69,7 @@ int main(int argc, char const *argv[])
 
             case 12: d = insertionSort(d);  break;
 
-            case 13: d =  merge_sort(d);    break;
+            case 13: d = merge_sort(d);    break;
 
             case 16:
                 int movefrom, moveto;
