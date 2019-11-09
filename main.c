@@ -21,10 +21,11 @@ int main(int argc, char const *argv[])
         printf("\n10. Delete at pos ");
         printf("\n11. Bubble Sort list ");
         printf("\n12. Insertion Sort list ");
-        printf("\n13. Search element ");
-        printf("\n14. Reverse list ");
-        printf("\n15. Delete duplicate elements from list ");
-        printf("\n16. Move a node");
+        printf("\n13. Merge Sort list ");
+        printf("\n14. Search element ");
+        printf("\n15. Reverse list ");
+        printf("\n16. Delete duplicate elements from list ");
+        printf("\n17. Move a node");
         printf("\n0. EXIT\n");
 
         printf("Enter your choice : ");
@@ -67,6 +68,8 @@ int main(int argc, char const *argv[])
             case 11: d = bubbleSort(d);     break;
 
             case 12: d = insertionSort(d);  break;
+
+            case 13: d =  merge_sort(d);    break;
 
             case 16:
                 int movefrom, moveto;

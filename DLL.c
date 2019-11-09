@@ -428,3 +428,66 @@ struct DLL insertionSort(struct DLL d)
     }
     return sorted;
 }
+
+struct DLL merge(struct DLL left, struct DLL right)
+{
+    struct DLL merged = {NULL, NULL}; //  a temp LL where the merged list will be stored
+
+    while(left.head != NULL && right.head != NULL){   //  iterating through the sub-lists
+        if(left.head->data <= right.head->data){  
+            merged = insert_node_end(merged, left.head->data);    //  sort and insert to the list
+            left.head = left.head->next;  //  shift the tested list
+        }
+
+        else if(left.head->data >= right.head->data){
+            merged = insert_node_end(merged, right.head->data);   //  sort and insert to the list
+            right.head = right.head->next;    //  shift the tested list
+        }
+    }
+
+    while(left.head != NULL){    //  if there are extra element(s) in the left LL, insert them too
+        merged = insert_node_end(merged, left.head->data);
+        left.head = left.head->next;
+    }
+    
+    while(right.head != NULL){   //  if there are extra element(s) in the right LL, insert them too
+        merged = insert_node_end(merged, right.head->data);
+        right.head = right.head->next;
+    }
+
+    // printf("Sorting & Merging: \n");    //  PRINT DEBUGGING
+    // traverse(merged);   printf("\n\n"); //  PRINT DEBUGGING
+    return merged;
+}
+
+struct DLL merge_sort(struct DLL d)
+{
+    if((d.head == NULL && d.tail == NULL) || (d.head->next == NULL && d.tail->prev == NULL))  //  terminating condition, when the list is empty
+        return d;
+
+    struct DLL left = d, right = d;
+    while(right.head != NULL && right.head->next != NULL && right.head->next->next != NULL){   //  finding the mid element
+        right.head = right.head->next->next;  //  hopping right two at a time
+        left.head = left.head->next;  //  while hopping left one at a time
+    }
+    /*  after the above iteration: left is the middle element   */
+    right.tail = right.head;
+    right.head = left.head->next; //  setting the head of the right LL to the next of mid
+    right.head->prev = NULL;
+    while(right.tail->next != NULL)
+        right.tail = right.tail->next;
+
+    left.tail = left.head;
+    left.tail->next = NULL;  
+    left.head = d.head;    //  setting the head of left LL to the head of the list
+
+    // printf("Spliting: \n"); //  PRINT DEBUGGING
+    // printf("Left: \n");   print_list(left);     printf("\n");   //  PRINT DEBUGGING
+    // printf("Right: \n");   print_list(right);   printf("\n\n"); //  PRINT DEBUGGING
+    // printf("\n");
+
+    left = merge_sort(left);    //  keep on dividing the left half
+    right  = merge_sort(right);  //  keep on dividing the right half
+    return merge(left, right);      //  conquer the left and right halves
+}
+
