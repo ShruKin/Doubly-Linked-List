@@ -17,6 +17,7 @@ struct DLL insert_node(struct DLL d, int data, int idx);
 struct DLL insert_node_sorted(struct DLL d, int data);
 struct DLL create_DLL(struct DLL d);
 struct DLL create_sorted_DLL(struct DLL d);
+struct DLL move_node(struct DLL d, int movefrom_idx, int moveto_idx);
 
 void print_list(struct DLL d)
 {
@@ -376,3 +377,39 @@ struct DLL move_node(struct DLL d, int movefrom_idx, int moveto_idx)    //  pass
 
     return d;
 }
+
+void swap(int *a, int *b){
+    int temp = *a;
+    *a = *b;
+    *b = *a;
+}
+
+struct DLL bubbleSort(struct DLL d) 
+{ 
+    int is_swapped, i; 
+    struct node *ptr; 
+    struct node *last = NULL; 
+   
+    if (d.head == NULL && d.tail == NULL) 
+        return d; 
+   
+    do
+    { 
+        is_swapped = 0; 
+        ptr = d.head; 
+   
+        while (ptr->next != last) 
+        { 
+            if (ptr->data > ptr->next->data) 
+            {  
+                swap(&ptr->data, &ptr->next->data); 
+                is_swapped = 1; 
+            } 
+            ptr = ptr->next; 
+        } 
+        last = ptr; 
+    } 
+    while (is_swapped); 
+
+    return d;
+} 
