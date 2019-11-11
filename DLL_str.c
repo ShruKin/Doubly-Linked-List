@@ -59,12 +59,12 @@ struct DLL_str create_DLL_str(struct DLL_str d)
 
 	while(strcmp(str, "null") != 0)
 	{
-        struct node_str* newNode = (struct node_str *) malloc(sizeof(struct node_str)), *ptr;
+        struct node_str* newNode = (struct node_str *) malloc(sizeof(struct node_str));
         if (newNode == NULL) { //  if newNode couldnt be allocated: insufficient memory :(
             printf("<Memory Overflow> Insufficient Memory, Insertion Failed!\n");
             return d;
         }
-		// newNode->data=num;
+
 		if(d.head == NULL && d.tail == NULL)
 		{
 			strcpy(newNode->data, str);
