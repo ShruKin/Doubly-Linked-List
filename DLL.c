@@ -23,6 +23,8 @@ struct DLL bubbleSort(struct DLL d);
 struct DLL insertionSort(struct DLL d);
 struct DLL merge(struct DLL left, struct DLL right);
 struct DLL merge_sort(struct DLL d);
+struct node* middle(struct node* start, struct node* last);
+struct node *binary_search(struct DLL d, int key);
 
 void print_list(struct DLL d)
 {
@@ -496,3 +498,51 @@ struct DLL merge_sort(struct DLL d)
     return merge(left, right);      //  conquer the left and right halves
 }
 
+struct node* middle(struct node* start, struct node* last) 
+{ 
+    if (start == NULL) 
+        return NULL; 
+  
+    struct node* slow = start; 
+    struct node* fast = start -> next; 
+  
+    while (fast != last) 
+    { 
+        fast = fast -> next; 
+        if (fast != last) 
+        { 
+            slow = slow -> next; 
+            fast = fast -> next; 
+        } 
+    } 
+  
+    return slow; 
+} 
+
+struct node *binary_search(struct DLL d, int key)
+{
+	if(d.head == NULL && d.tail == NULL)
+        return NULL;
+
+    struct node *first = d.head, *last = NULL;
+
+    do
+    { 
+        struct node* mid = middle(first, last); 
+
+        if (mid == NULL) 
+            return NULL; 
+
+        if (mid -> data == key) 
+            return mid; 
+
+        else if (mid -> data < key)
+            first = mid -> next; 
+        
+        else
+            last = mid; 
+  
+    } while (last == NULL || last != first); 
+  
+    return NULL; 
+}

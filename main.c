@@ -22,10 +22,11 @@ int main(int argc, char const *argv[])
         printf("\n11. Bubble Sort list ");
         printf("\n12. Insertion Sort list ");
         printf("\n13. Merge Sort list ");
-        printf("\n14. Search element ");
-        printf("\n15. Reverse list ");
-        printf("\n16. Delete duplicate elements from list ");
-        printf("\n17. Move a node");
+        printf("\n14. Linear Search element ");
+        printf("\n15. Binary Search element ");
+        printf("\n16. Reverse list ");
+        printf("\n17. Delete duplicate elements from list ");
+        printf("\n18. Move a node");
         printf("\n0. EXIT\n");
 
         printf("Enter your choice : ");
@@ -70,6 +71,15 @@ int main(int argc, char const *argv[])
             case 12: d = insertionSort(d);  break;
 
             case 13: d = merge_sort(d);    break;
+
+            case 15: 
+                printf("Enter data to search: ");
+                scanf("%d", &data);
+                if(binary_search(d, data)!=NULL)
+                    printf("%d is found in the list!", data);
+                else
+                    printf("%d is not found in the list!", data);
+                break;
 
             case 17:
                 int movefrom, moveto;
