@@ -27,6 +27,9 @@ int main(int argc, char const *argv[])
         printf("\n16. Reverse list ");
         printf("\n17. Delete duplicate elements from list ");
         printf("\n18. Move a node");
+        printf("\n19. Exchange first and last node");
+        printf("\n20. Count no. of nodes");
+        printf("\n21. Split into halves");
         printf("\n0. EXIT\n");
 
         printf("Enter your choice : ");
@@ -66,6 +69,12 @@ int main(int argc, char const *argv[])
                 scanf("%d", &data);
                 d = insert_node_sorted(d, data);		break;
 
+            case 8: d = delete_at_beginning(d); break;
+
+            case 9: d =  delete_at_end(d);  break;
+
+            case 10: d = delete_at_position(d); break;  
+
             case 11: d = bubbleSort(d);     break;
 
             case 12: d = insertionSort(d);  break;
@@ -81,13 +90,24 @@ int main(int argc, char const *argv[])
                     printf("%d is not found in the list!", data);
                 break;
 
-            case 17:
+            case 16: d = reverse(d);    break;
+            
+            case 17:    d = deleteduplicates(d);    break;
+
+            case 18:
                 int movefrom, moveto;
                 printf("Enter index to move from: ");
                 scanf("%d", &movefrom);
                 printf("Enter index to move to: ");
                 scanf("%d", &moveto);
                 d = move_node(d, movefrom, moveto);
+                break;
+
+            case 19: d = exchangefirstlast(d);  break;
+
+            case 20: printf("%d no. of nodes are present!", count(d));  break;
+
+            case 21: d= split(d);   break;
         }
 
         printf("\n\n");

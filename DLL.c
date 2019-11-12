@@ -25,6 +25,15 @@ struct DLL merge(struct DLL left, struct DLL right);
 struct DLL merge_sort(struct DLL d);
 struct node* middle(struct node* start, struct node* last);
 struct node *binary_search(struct DLL d, int key);
+struct DLL delete_at_position(struct DLL d); //  :( change korte hobe
+struct DLL delete_at_beginning(struct DLL d);
+struct DLL delete_at_end(struct DLL d);
+struct DLL exchangefirstlast(struct DLL d);
+int count(struct DLL d);
+struct DLL split(struct DLL d);
+struct DLL deleteduplicates(struct DLL d);
+struct DLL reverse(struct DLL d);
+
 
 void print_list(struct DLL d)
 {
@@ -498,7 +507,7 @@ struct DLL merge_sort(struct DLL d)
     return merge(left, right);      //  conquer the left and right halves
 }
 
-struct node* middle(struct node* start, struct node* last) 
+struct node* middle(struct node *start, struct node* last) 
 { 
     if (start == NULL) 
         return NULL; 
@@ -545,4 +554,253 @@ struct node *binary_search(struct DLL d, int key)
     } while (last == NULL || last != first); 
   
     return NULL; 
+}
+
+struct DLL delete_at_position(struct DLL d) //  :( change korte hobe
+{
+	if(d.head==NULL && d.tail==NULL)
+	{
+		printf("\nLinked list not found ");
+	     return d;
+	}
+	else if(d.head==d.tail)
+	{
+		d.head=d.tail=NULL;
+		return d;
+	}
+	int i=1,pos;
+	struct node *ptr,*ptr2;
+	printf("enter the position to be deleted");
+	scanf("%d",&pos);
+	ptr=d.head;
+	while(i<pos-1 && ptr->next!=NULL)
+	{
+		ptr=ptr->next;
+		i++;
+	}
+	if(pos==1)
+	{
+		ptr=d.head;
+		d.head=d.head->next;
+		d.head->prev=NULL;
+		free(ptr);
+		return d;
+	}
+     else if(ptr==d.tail)
+     {
+     	d.tail=d.tail->prev;
+     	d.tail->next=NULL;
+     	free(ptr);
+     	return d;
+	}
+	else
+	{
+		ptr2=ptr->next;
+		ptr->next=ptr2->next;
+		ptr2->next->prev=ptr;
+		free(ptr2);
+		return d;
+	}
+}
+
+struct DLL delete_at_beginning(struct DLL d)
+{
+	if(d.head==NULL && d.tail==NULL)
+	{
+		printf("\nLinked list not found ");
+	     return d;
+	}
+	else if(d.head==d.tail)
+	{
+		d.head=d.tail=NULL;
+		return d;
+	}
+	struct node *ptr;
+	ptr=d.head;
+	d.head=d.head->next;
+	d.head->prev=NULL;
+	free(ptr);
+	return d;
+}
+
+struct DLL delete_at_end(struct DLL d)
+{
+	if(d.head==NULL && d.tail==NULL)
+	{
+		printf("\nLinked list not found ");
+	     return d;
+	}
+	else if(d.head==d.tail)
+	{
+		d.head=d.tail=NULL;
+		return d;
+	}
+	struct node *ptr;
+	ptr=d.tail;
+	d.tail=d.tail->prev;
+     	d.tail->next=NULL;
+     	free(ptr);
+     	return d;
+}
+
+struct DLL exchangefirstlast(struct DLL d)
+{
+	struct node *ptr=d.tail,*qtr=d.head;
+	if(d.head==NULL && d.tail==NULL)
+	{
+	printf("list is empty");
+	return d;
+    }
+	int t=0;
+	t=ptr->data;
+	ptr->data=qtr->data;
+	qtr->data=t;
+      return d;
+}
+
+int count(struct DLL d)
+{
+	if(d.head==NULL && d.tail==NULL)
+     {
+	printf("list is empty");
+	return 0;
+     }
+	struct node *ptr;
+	int cnt=0;
+	ptr=d.head;
+	while(ptr!=d.tail)
+	{
+		cnt++;
+		ptr=ptr->next;
+	}
+	printf(" \nThe no. of nodes %d",cnt+1);
+	return (cnt+1);
+}
+
+struct DLL split(struct DLL d)
+{
+	struct node *temp1,*ptr,*qtr,*temp2,*head1=d.head,**head2=NULL;
+	if(d.head==NULL && d.tail==NULL)
+	{
+		printf("linked list is empty");
+		return d;
+	}
+     temp1=d.head;
+     temp2=d.tail;
+     printf("dll");
+     while(temp1->next!=NULL)
+     {
+     	if(temp1->next==temp2)
+     	break;
+     	temp1=temp1->next;
+     	temp2=temp2->prev;
+	}
+	temp1->next=NULL;
+	*head2=temp2;
+	temp2->prev=NULL;
+	ptr=d.head;
+	qtr=*head2;
+	printf("First list \n");
+	while(ptr!=NULL)
+	{
+		printf("%d",ptr->data);
+		ptr=ptr->next;
+	}
+	printf("Second list \n");
+	while(qtr!=NULL)
+	{
+		printf("%d",qtr->data);
+		qtr=qtr->next;
+	}
+	return d;
+}
+
+//  TODO: Fix this
+struct DLL deleteduplicates(struct DLL d)
+{
+	struct node *ptr,*ptr2,*ptr3;
+	ptr=d.head;
+	if(d.head==NULL && d.tail==NULL)
+	{
+	printf("list is empty");
+	return d;
+     }
+     while(ptr->next!=NULL && ptr!=NULL)
+     {
+     	ptr2=ptr;
+     	ptr3=ptr->next;
+     	printf("dll");
+     	while(ptr3!=NULL)
+     	{
+     		if(ptr3->data==ptr2->data)
+     		{
+     			struct node* todel = ptr3;
+     			ptr2->next=ptr3->next;
+     			ptr3->next->prev=ptr2;
+     			free(todel);
+//     			ptr3=ptr2;//gotcha ig ;(
+			}
+			else
+				ptr3=ptr3->next;
+		}
+		ptr=ptr->next;
+	}
+printf("Duplicates deleted");
+return d;
+}
+
+//  TODO Fix this
+struct DLL reverse(struct DLL d)
+{
+	struct node *current,*temp;
+	current=d.head;
+	if(d.head==NULL && d.tail==NULL)
+	{
+	printf("list is empty");
+	return d;
+     }
+     while(current!=NULL)
+     {
+     	temp=current->prev;
+     	current->prev=current->next;
+     	current->next=temp;
+     	current=current->prev;
+     }
+	d.head=temp->prev;
+	printf("linked list reversed");
+	return d;
+}
+
+//  TODO: complete this
+struct DLL deleteevens(struct DLL d)
+{
+	struct node *ptr=d.head,*ptr2;
+	if(d.head==NULL && d.tail==NULL)
+	{
+	printf("list is empty");
+	return d;
+     }
+     while(ptr!=NULL)
+     {
+     	ptr2=ptr;
+     	if(ptr2->data%2==0)
+     	{
+     		printf("even");
+     		if(ptr2==d.head)
+			{
+     			d.head=d.head->next;
+     			d.head->prev=NULL;
+     			free(ptr2);
+     			
+			}
+			else
+			{
+				ptr2->prev->next=ptr2->next;
+				ptr2->next->prev=ptr2->prev;
+				free(ptr2);
+			}
+		}
+		ptr=ptr->next;
+	}
+	return d;
 }
